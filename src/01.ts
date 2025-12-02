@@ -22,6 +22,7 @@ const part1 = () => {
       answer++;
     }
   }
+  console.log("Resulting Password:", answer);
 };
 
 const part2 = () => {
