@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 
-const readFile = () => {
-  const content = readFileSync("./src/input/01.txt", "utf-8");
+const readFile = (file: string) => {
+  const content = readFileSync(file, "utf-8");
   const lines = content.split("\n").filter(Boolean);
   return lines;
 };
@@ -11,8 +11,8 @@ const parseLine = (line: string) => {
   return { value: Number(value), right: line.startsWith("R") };
 };
 
-const part1 = () => {
-  const lines = readFile();
+const part1 = (file: string): number => {
+  const lines = readFile(file);
   let current = 50;
   let answer = 0;
   for (const line of lines) {
@@ -22,11 +22,12 @@ const part1 = () => {
       answer++;
     }
   }
-  console.log("Resulting Password:", answer);
+
+  return answer;
 };
 
-const part2 = () => {
-  const lines = readFile();
+const part2 = (file: string): number => {
+  const lines = readFile(file);
   let current = 50;
   let answer = 0;
   for (const line of lines) {
@@ -45,10 +46,29 @@ const part2 = () => {
       answer++;
     }
   }
-  console.log("Resulting Password:", answer);
+
+  return answer;
 };
 
 export default () => {
-  part1();
-  part2();
+  const testAnswer1 = part1("./src/input/01.test.txt");
+  if (testAnswer1 === 3) {
+    console.log("Part 1 Answer:", part1("./src/input/01.txt"));
+  } else {
+    console.log(
+      "\x1b[31m%s\x1b[0m",
+      "Part 1 failed to pass test input. Got",
+      testAnswer1
+    );
+  }
+  const testAnswer2 = part2("./src/input/01.test.txt");
+  if (testAnswer2 === 6) {
+    console.log("Part 2 Answer:", part2("./src/input/01.txt"));
+  } else {
+    console.log(
+      "\x1b[31m%s\x1b[0m",
+      "Part 2 failed to pass test input. Got",
+      testAnswer2
+    );
+  }
 };

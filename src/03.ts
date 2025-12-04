@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 
-const readFile = () => {
-  const content = readFileSync("./src/input/03.txt", "utf-8");
+const readFile = (file: string) => {
+  const content = readFileSync(file, "utf-8");
   const banks = content.split("\n").filter(Boolean);
   return banks;
 };
@@ -30,27 +30,47 @@ const getBiggestBattery = (
   );
 };
 
-const part1 = () => {
-  const banks = readFile();
+const part1 = (file: string): number => {
+  const banks = readFile(file);
   let count = 0;
   for (const bank of banks) {
     const biggestBattery = getBiggestBattery(parseLine(bank), 2);
     count += Number(biggestBattery);
   }
-  console.log("Results:", count);
+
+  return count;
 };
 
-const part2 = () => {
-  const banks = readFile();
+const part2 = (file: string): number => {
+  const banks = readFile(file);
   let count = 0;
   for (const bank of banks) {
     const biggestBattery = getBiggestBattery(parseLine(bank), 12);
     count += Number(biggestBattery);
   }
-  console.log("Results:", count);
+
+  return count;
 };
 
 export default () => {
-  part1();
-  part2();
+  const testAnswer1 = part1("./src/input/03.test.txt");
+  if (testAnswer1 === 357) {
+    console.log("Part 1 Answer:", part1("./src/input/03.txt"));
+  } else {
+    console.log(
+      "\x1b[31m%s\x1b[0m",
+      "Part 1 failed to pass test input. Got",
+      testAnswer1
+    );
+  }
+  const testAnswer2 = part2("./src/input/03.test.txt");
+  if (testAnswer2 === 3121910778619) {
+    console.log("Part 2 Answer:", part2("./src/input/03.txt"));
+  } else {
+    console.log(
+      "\x1b[31m%s\x1b[0m",
+      "Part 2 failed to pass test input. Got",
+      testAnswer2
+    );
+  }
 };
